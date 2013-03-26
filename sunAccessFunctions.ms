@@ -1,4 +1,4 @@
-
+print "start loading functions"
 fn getLongEdgeLength aRectangularFace =
 (
     --should return the second longest number, longest is the diagonal
@@ -52,7 +52,7 @@ fn HTMLtitle headingText Hlevel =
 (
     return "  <h" + (Hlevel as string) + ">" + (headingText as string) + "</h" + (Hlevel as string) + ">"
 )
-fn HTMLstartTable =
+fn HTMLstartTable trickArg =
 (
     return ("<table>" + "<tr>" + "<td></td>") as string
 )
@@ -72,3 +72,4 @@ fn MakeTopRow startTime endTime hourSubdiv =
     localRow = localRow + ("</tr>") --once the loop is finished close the row 
     return localRow
 )
+print "end loading functions"
