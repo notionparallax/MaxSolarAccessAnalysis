@@ -13,37 +13,31 @@ selectionSetname = "toTest"
 --check that there is a valid file name for creating the html document into
 if out_name != undefined then
 (
-	print "here wo go"
+	print "here we go"
 	
 	--**********************write html to the header***************************
-    out_file = createfile out_name --create a file ready to start writing to it
+	out_file = createfile out_name --create a file ready to start writing to it
 
-    --This is an HTML header that starts off the table
-   
-    head =  HTMLheader ("Sunlight Study - Winter Solstice "+ (startTime as string) + " to" + (endTime as string))
-    title = HTMLtitle "ACTIVE BorrowdaleHouse RENDER ORIGINAL DA" 1
-    tableStart = HTMLstartTable "ignoreThisArg"                                                             --start the table with an empty cell in the top left corner
-    format "%" (head + title + tableStart) to:out_file
-        
-    --writes out the top line 
-    topline = makeTopRow startTime endTime hourSubdiv
-    format "%" topline to:out_file --once the loop is finished close the row 
+	--This is an HTML header that starts off the table   
+	head =  HTMLheader ("Sunlight Study - Winter Solstice "+ (startTime as string) + " to" + (endTime as string))
+	title = HTMLtitle "ACTIVE BorrowdaleHouse RENDER ORIGINAL DA" 1
+	tableStart = HTMLstartTable "ignoreThisArg" --start the table with an empty cell in the top left corner
+	format "%" (head + title + tableStart) to:out_file
+		
+	--writes out the top line 
+	topline = makeTopRow startTime endTime hourSubdiv
+	format "%" topline to:out_file --once the loop is finished close the row 
 	--********************** end write html to the header***************************
-
---     mycamera  = Targetcamera pos:[0,0,0]
---     mycamera.fov = 120
---     mycamera.fovType = 1 --1 means measured horizontaly
---     mycamera.showcone = true
-
+		
 	--set this to be |selection| if you want to set the selection manually
 	--analysisFaces = selection
 	analysisFaces = selectionSets[selectionSetname] 
 	
-    print ("lets get going on " + (analysisFaces.count as string) + " faces")
-    for i in 1 to analysisFaces.count do
-    (
-        thisFace = analysisFaces[i]
-        --theNameOfThisFace = formatName(thisFace.name)
+	print ("lets get going on " + (analysisFaces.count as string) + " faces")
+	for i in 1 to analysisFaces.count do
+	(
+		thisFace = analysisFaces[i]
+		--theNameOfThisFace = formatName(thisFace.name)
 		theNameOfThisFace = thisFace.name + " " + (i as string)
 		--print "what we know about thisFace is " + thisFace
 		if theNameOfThisFace != undefined then
@@ -113,29 +107,6 @@ if out_name != undefined then
 						--<td><img src="windowCaptures/N_1801_T_T/N_1801_T_T_3_10_0.jpg" /></td> 
 					)
 				)
--- 				--re-place the camera as a locator
--- 				eyePoint = (centroidPoint + (myNormal*600))+[0,0,500]--print ("eyePoint " + eyePoint as string)    
--- 				tarPoint  = [8500,23000,1800]
--- 				mycamera.position = eyePoint
--- 				mycamera.target = Targetobject pos:tarPoint
--- 				thisAppt = execute("$"+theNameOfThisFace)
--- 				thisAppt.material = meditMaterials[12]
--- 				filename = theNameOfThisFace +"_Locator"+".jpg"
--- 				fullPath = rootFolder + filename 
--- 				if doesFileExist(fullPath) then
--- 				(
--- 					print (fullPath as string + "  already exists!!")
--- 				)
--- 				else
--- 				(                        
--- 					print fullPath
--- 					b.filename = fullPath                    
--- 					render camera:mycamera to:b vfb:false    
--- 					save b
--- 				)
--- 				thisAppt.material = meditMaterials[14]
--- 				format "<td><img src=\"%%\"  width=\"150px\"/></td>\n" filename  to:out_file
--- 				format "%" "</tr>\n" to:out_file
 				print "done all the renders for this face"
 				gc() --should do a tidy up of the memory
 			)
@@ -144,7 +115,7 @@ if out_name != undefined then
 		(
 			print "OHSHIT: theNameOfThisFace is undefined"
 		)
-    )
+	)
 format "%" "</table></body></html>" to:out_file
 close out_file
 Print "*****finished*****"
