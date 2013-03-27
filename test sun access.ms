@@ -3,10 +3,10 @@ print "****************************"
 
 out_name = GetSaveFileName()
 rootFolder = "C:/analysisTest/"
-hourSubdiv = 4
-startTime = 8
-endTime  = 17
-outputWidth = 300 --in pixels
+hourSubdiv = 5
+startTime = 7
+endTime  = 19
+outputWidth = 150 --in pixels
 justMakeTheCameras = false
 selectionSetname = "toTest"
 
@@ -113,29 +113,30 @@ if out_name != undefined then
 						--<td><img src="windowCaptures/N_1801_T_T/N_1801_T_T_3_10_0.jpg" /></td> 
 					)
 				)
-				--re-place the camera as a locator
-				eyePoint = (centroidPoint + (myNormal*600))+[0,0,500]--print ("eyePoint " + eyePoint as string)    
-				tarPoint  = [8500,23000,1800]
-				mycamera.position = eyePoint
-				mycamera.target = Targetobject pos:tarPoint
-				thisAppt = execute("$"+theNameOfThisFace)
-				thisAppt.material = meditMaterials[12]
-				filename = theNameOfThisFace +"_Locator"+".jpg"
-				fullPath = rootFolder + filename 
-				if doesFileExist(fullPath) then
-				(
-					print (fullPath as string + "  already exists!!")
-				)
-				else
-				(                        
-					print fullPath
-					b.filename = fullPath                    
-					render camera:mycamera to:b vfb:false    
-					save b
-				)
-				thisAppt.material = meditMaterials[14]
-				format "<td><img src=\"%%\"  width=\"150px\"/></td>\n" filename  to:out_file
-				format "%" "</tr>\n" to:out_file
+-- 				--re-place the camera as a locator
+-- 				eyePoint = (centroidPoint + (myNormal*600))+[0,0,500]--print ("eyePoint " + eyePoint as string)    
+-- 				tarPoint  = [8500,23000,1800]
+-- 				mycamera.position = eyePoint
+-- 				mycamera.target = Targetobject pos:tarPoint
+-- 				thisAppt = execute("$"+theNameOfThisFace)
+-- 				thisAppt.material = meditMaterials[12]
+-- 				filename = theNameOfThisFace +"_Locator"+".jpg"
+-- 				fullPath = rootFolder + filename 
+-- 				if doesFileExist(fullPath) then
+-- 				(
+-- 					print (fullPath as string + "  already exists!!")
+-- 				)
+-- 				else
+-- 				(                        
+-- 					print fullPath
+-- 					b.filename = fullPath                    
+-- 					render camera:mycamera to:b vfb:false    
+-- 					save b
+-- 				)
+-- 				thisAppt.material = meditMaterials[14]
+-- 				format "<td><img src=\"%%\"  width=\"150px\"/></td>\n" filename  to:out_file
+-- 				format "%" "</tr>\n" to:out_file
+				print "done all the renders for this face"
 				gc() --should do a tidy up of the memory
 			)
 		)
