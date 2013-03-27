@@ -20,7 +20,7 @@ fn getShortEdgeLength aRectangularFace =
     return sorted [1]
 )
 
-fn getName thingWithAname = 
+fn formatName thingWithAname = 
 (
     newName = ((filterString thingWithAname "_")[2])
     return newName

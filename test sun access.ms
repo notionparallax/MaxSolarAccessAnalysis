@@ -7,32 +7,19 @@ hourSubdiv = 4
 startTime = 8
 endTime  = 17
 outputWidth = 300 --in pixels
-justMakeTheCameras = true
+justMakeTheCameras = false
 selectionSetname = "toTest"
 
 --check that there is a valid file name for creating the html document into
 if out_name != undefined then
 (
 	print "here wo go"
+	
+	--**********************write html to the header***************************
     out_file = createfile out_name --create a file ready to start writing to it
-	
-	--set this to be |selection| if you want to set the selection manually
-	--analysisFaces = selection
-	analysisFaces = selectionSets[selectionSetname] 
-	
-    print ("lets get going on " + (analysisFaces.count as string) + " faces")
 
     --This is an HTML header that starts off the table
---     format "%" "<!DOCTYPE html>" to:out_file                                                                   --html 5 doctype
---     format "%" "<head>" to:out_file                                                                                --
---     format "%" "  <title>Sunlight Study - Winter Solstice -09:00 to 15:00</title>" to:out_file    --header
---     format "%" "</head>" to:out_file                                                                               --
---     format "%" "<body>" to:out_file                                                                                --start body of html
---     format "%" "  <h1>ACTIVE BorrowdaleHouse RENDER ORIGINAL DA</h1>" to:out_file           --page title
---     format "%" "    <table>" to:out_file                                                                            --start the table
---     format "%" "      <tr>" to:out_file                                                                              --start a table row
---     format "%" "        <td></td>" to:out_file                                                                    --an empty cell in the top left corner
-    
+   
     head =  HTMLheader ("Sunlight Study - Winter Solstice "+ (startTime as string) + " to" + (endTime as string))
     title = HTMLtitle "ACTIVE BorrowdaleHouse RENDER ORIGINAL DA" 1
     tableStart = HTMLstartTable "ignoreThisArg"                                                             --start the table with an empty cell in the top left corner
@@ -41,20 +28,27 @@ if out_name != undefined then
     --writes out the top line 
     topline = makeTopRow startTime endTime hourSubdiv
     format "%" topline to:out_file --once the loop is finished close the row 
+	--********************** end write html to the header***************************
 
 --     mycamera  = Targetcamera pos:[0,0,0]
 --     mycamera.fov = 120
 --     mycamera.fovType = 1 --1 means measured horizontaly
 --     mycamera.showcone = true
 
+	--set this to be |selection| if you want to set the selection manually
+	--analysisFaces = selection
+	analysisFaces = selectionSets[selectionSetname] 
+	
+    print ("lets get going on " + (analysisFaces.count as string) + " faces")
     for i in 1 to analysisFaces.count do
     (
         thisFace = analysisFaces[i]
-        theNameOfThisFace = getName(thisFace.name)
-		
+        --theNameOfThisFace = formatName(thisFace.name)
+		theNameOfThisFace = thisFace.name + " " + (i as string)
+		--print "what we know about thisFace is " + thisFace
 		if theNameOfThisFace != undefined then
 		(
-			print "theNameOfThisFace is " + theNameOfThisFace
+			print ("theNameOfThisFace is " + (theNameOfThisFace as string))			
 			mycamera  = Targetcamera pos:[0,0,0]
 			mycamera.fov = 120
 			mycamera.fovType = 1 --1 means measured horizontaly
@@ -81,8 +75,6 @@ if out_name != undefined then
 			mycamera.position = eyePoint
 			mycamera.target = Targetobject pos:tarPoint
 			
-			print "theNameOfThisFace"
-			print theNameOfThisFace
 			--makedir (rootFolder + theNameOfThisFace)
 			format "%" "<tr>" to:out_file
 			format "%" ("<td>"+ theNameOfThisFace +"</td>") to:out_file
@@ -99,7 +91,11 @@ if out_name != undefined then
 						--print (TimeFromSolarTime solTime) as string
 						$Daylight001.controller.solar_time.controller.value = solTime    
 						filename = theNameOfThisFace + "_" + hour as string + "_" + minutes as string + ".png" --name_hr_min.png
-						fullPath = rootFolder filename
+						print ("Path details")
+						print (rootFolder)
+						print (filename)
+						fullPath = (rootFolder + filename)
+						print (fullPath)
 						if doesFileExist(fullPath) then
 						(
 							print (fullPath as string + "  already exists!! I'll skip this one.")
@@ -111,7 +107,8 @@ if out_name != undefined then
 							render camera:mycamera to:b vfb:false    
 							save b
 						)
-						format "<td><img src=\"%%\"  width=\"150px\"/></td>\n" filename  to:out_file
+						td = "<td><img src=\""+filename+"\"  width=\"150px\"/></td>\n" 
+						format "%" td to:out_file
 						--for example
 						--<td><img src="windowCaptures/N_1801_T_T/N_1801_T_T_3_10_0.jpg" /></td> 
 					)
