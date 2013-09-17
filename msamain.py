@@ -7,9 +7,7 @@ import msaTemplates as msat
 """
 File name format is:
 faceID_1_name_Diversity-Wall_month_1_hr_7_min_15_.png
-
 """
-
 
 months = [  'January'  ,            'February' ,            'March'    ,
             'April'    ,            'May'      ,            'June'     ,
@@ -23,7 +21,9 @@ path='./Images'
 
 #gets, formats into objects and sorts the filenames
 saImages = getFileList(path, ('minute','hour','faceID','month'))
-
+for i in saImages:
+    print i.appendPcWhiteToFileName()
+'''
 monthBinnedImages = []
 for month in range(len(months)):
     tempMonthBin = binByMonth(month, saImages)
@@ -34,9 +34,6 @@ binnedImages = []
 for mbin in monthBinnedImages:
     binnedImages.append(binByFace(mbin))
    
-#get an outputfile ready
-f = open('tempworkfile.html', 'w')
-
 #build a string, seems neater than writing to the file a lot
 thehtml = ""
 
@@ -46,7 +43,6 @@ thehtml += msat.headTmpl.render(
     when = datetime.date.today()
     )
 
-#print monthBinnedImages
 for moBin in binnedImages:
     if len(moBin)!= 0:
         #
@@ -59,9 +55,12 @@ for moBin in binnedImages:
 thehtml += msat.tailTmpl.render(
     variable = 'Visualising solar access to these faces'
     )
-print thehtml
+
+#get an outputfile ready
+f = open('tempworkfile.html', 'w')
+#print thehtml
 f.write(thehtml)
 f.close()
-#fancy bit to only put in comma if it not the last item
-#{% if not loop.last %},{% endif %}
+
+'''
 print "done"

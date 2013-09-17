@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 from PIL import Image
 
 #this won't allow me to just ask for smile.png for some reason
-im = Image.open("C:/Users/bdoherty/Desktop/Max-Analysis/MaxSolarAccessAnalysis/smile.png")
-
+im = Image.open("./Images/faceID_1_name_Diversity-Wall_month_5_hr_14_min_45_.png")
+im = im.convert("RGB")
 #some pleasantries
 print("info:", im.info)
 print("palette:", im.palette)

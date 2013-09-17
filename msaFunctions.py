@@ -29,14 +29,17 @@ def pullNamesFromFolder(dirList):
                           n[8]:n[9]})
     return files
 
-def filenamesToObjects(files):
+def filenamesToObjects(files, path):
     saImages = []
     for img in files:
+        #this is where the class happens!!!!!!!!!!!!!!!!!!!!!!
         saImages.append(msac.saImage(img['hr'],
-                                img['faceID'],
-                                img['min'],
-                                img['name'],
-                                img['month']))
+                                     img['faceID'],
+                                     img['min'],
+                                     img['name'],
+                                     img['month'],
+                                     path
+                                    ))
     return saImages
 
 def sortOnMultipleKeys(thingToSort, tupleOfKeysAsStrings):
@@ -54,7 +57,7 @@ def getFileList(path, sortOrder):
     files = pullNamesFromFolder(dirList)
 
     #push the chopped up filenames into objects
-    saImages = filenamesToObjects(files)
+    saImages = filenamesToObjects(files, path)
 
     #sort images
     saImages = sortOnMultipleKeys(saImages, sortOrder)
