@@ -1,3 +1,7 @@
+from operator import itemgetter, attrgetter
+import os
+import msaClasses as msac
+
 def uniqueItems(seq, idfun=None): 
    # order preserving
    # taken from http://www.peterbe.com/plog/uniqifiers-benchmark
@@ -28,7 +32,7 @@ def pullNamesFromFolder(dirList):
 def filenamesToObjects(files):
     saImages = []
     for img in files:
-        saImages.append(saImage(img['hr'],
+        saImages.append(msac.saImage(img['hr'],
                                 img['faceID'],
                                 img['min'],
                                 img['name'],
