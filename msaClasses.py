@@ -9,7 +9,8 @@ class saImage:
         self.name      = name
         self.month     = int(month,  base=10)
         self.filename  = self.fileName()
-        self.path = path
+        self.path      = path
+        self.pcWhite   = self.countPx()
         
     def fileName(self):
         return "faceID_" + str(self.faceID) +\
@@ -46,8 +47,7 @@ class saImage:
         pcWhite = float(whitePx)/len(allPx)
         return pcWhite
         
-    def appendPcWhiteToFileName(self):
-        pcw = self.countPx()       
+    def appendPcWhiteToFileName(self):              
         splitName = self.fileName().split('.png')
-        newFilename = splitName[0] + "pcWhite_" + str(pcw) + '.png'        
+        newFilename = splitName[0] + "pcWhite_" + str(self.pcWhite) + '.png'        
         return newFilename

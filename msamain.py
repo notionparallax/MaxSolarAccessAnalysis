@@ -22,8 +22,8 @@ path='./Images'
 #gets, formats into objects and sorts the filenames
 saImages = getFileList(path, ('minute','hour','faceID','month'))
 for i in saImages:
-    print i.appendPcWhiteToFileName()
-'''
+    print i.appendPcWhiteToFileName()#this doesn't actually change the file name yet
+
 monthBinnedImages = []
 for month in range(len(months)):
     tempMonthBin = binByMonth(month, saImages)
@@ -62,5 +62,5 @@ f = open('tempworkfile.html', 'w')
 f.write(thehtml)
 f.close()
 
-'''
+
 print "done"
