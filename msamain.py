@@ -3,6 +3,8 @@ from operator import itemgetter, attrgetter
 import datetime
 from jinja2 import Template
 
+import msaFunctions
+
 def uniqueItems(seq, idfun=None): 
    # order preserving
    # taken from http://www.peterbe.com/plog/uniqifiers-benchmark
