@@ -21,8 +21,8 @@ path='./Images'
 
 #gets, formats into objects and sorts the filenames
 saImages = getFileList(path, ('minute','hour','faceID','month'))
-for i in saImages:
-    print i.appendPcWhiteToFileName()#this doesn't actually change the file name yet
+#for i in saImages:
+#    print i.appendPcWhiteToFileName()#this doesn't actually change the file name yet
 
 monthBinnedImages = []
 for month in range(len(months)):
