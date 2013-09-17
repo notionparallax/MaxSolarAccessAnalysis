@@ -1,6 +1,6 @@
-import re
+import os
 
-path='/home/ben/Dropbox/Public/sites/dataStory/MaxSolarAccessAnalysis/Images'
+path='./Images'
 
 dirList=os.listdir(path)
 
