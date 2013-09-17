@@ -19,7 +19,7 @@ months = [  'January'  ,            'February' ,            'March'    ,
 #############################################################################
 
 #Action starts here:
-path='C:/Users/bdoherty/Desktop/Max-Analysis/MaxSolarAccessAnalysis/Images'
+path='./Images'
 
 #gets, formats into objects and sorts the filenames
 saImages = getFileList(path, ('minute','hour','faceID','month'))
