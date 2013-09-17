@@ -6,8 +6,7 @@ headTmpl = Template(u'''\
   <head>
     <title>{{ variable|escape }}</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
-    <script src='https://raw.github.com/gka/chroma.js/master/chroma.min.js' 
-            type='text/javascript'></script>
+    <script src="chroma.js/chroma.min.js"></script>
     <style>
         img {height:60px;
              border-right-style: solid;
@@ -61,11 +60,12 @@ tailTmpl = Template(u'''\
         <p>{{ variable|escape }}</p>
         <script>
         $(document).ready(function(){
-            console.log('I'm in UR jq');
-            var scale = chroma.scale(['lightyellow', 'navy']);
-            $(.render).each(function(){
-                var pc = $(this).data('percentWhite');
-                $(this).css("background-color:"+scale(pc)+";");
+            console.log("I'm in UR jq");
+            var scale = chroma.scale(['white', 'red']);            
+            $('.render').each(function(){
+                var pc = $(this).data("percentwhite");
+                var col = scale(pc).hex();                
+                $(this).css("background-color", col);
             });
         });
         </script>
