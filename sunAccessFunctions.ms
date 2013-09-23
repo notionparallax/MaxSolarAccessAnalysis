@@ -44,9 +44,29 @@ fn SolarTimeFromTime hrs min =
     return(sotalTime) 
 )
 
+fn solarDateFromMonth monthInt =
+(	
+	-- jan 21st = (-151) dec 21st = (183) 
+	-- the excel function ROUND((30.357*A2)-181.98,0) produces *almost* the right results, but because of the month length variation it looks like the most eficient way to do this is with an array of dates.
+	-- this gives the 21st for each month
+	-- this is true for 2013, probably not for any other date.
+	--              1     2    3    4    5  6   7   8   9   10   11   12      
+	solDate = #( -151, -120, -92, -61, -31, 0, 30, 61, 92, 122, 151, 183)
+	return solDate[monthInt]
+)
+
 fn HTMLheader titleText =
 (
-    return  "<!DOCTYPE html>" +     "<head>" + "  <title>" + (titleText as string) + "</title>" + "</head>" + "<body>"
+	h = ""
+	h = h + "<!DOCTYPE html>"
+	h = h + "<html>"
+	h = h + "<head>"
+	h = h + "<title>"
+	h = h + (titleText as string)
+	h = h + "</title>"
+	h = h + "<style type=\"text/css\">img{height: 60px;}.plantWall{width: 225px;}</style>"
+	h = h + "</head>"
+    return h
 )
 fn HTMLtitle headingText Hlevel =
 (
