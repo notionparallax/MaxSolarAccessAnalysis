@@ -27,7 +27,7 @@ eachTableTempl = Template(u'''\
         <tr>
             {%- for img in amoi[0] %}
                 <td>
-                    <p>{{ img.hour }}:{{ '{:2}'.format(img.minute) }}</p>
+                    <p>{{ img.hour }}:{{ '{0:0>2}'.format(img.minute) }}</p>
                 <td>
             {%- endfor %}
         </tr>
@@ -35,8 +35,8 @@ eachTableTempl = Template(u'''\
             {%- for img in amoi[0] %}
                 <td>
                     <div class="render" data-percentWhite="{{img.pcWhite}}">
-                        <p>{{ img.name|replace("-", " ") }}<br>
-                        <img src="{{img_path}}/{{ img.fileName }}" /></p>
+                        <p>{{ img.name|replace("-", " ") }}</p>
+                        <p><img src="{{img_path}}/{{ img.filename }}" /></p>
                     </div>
                 <td>
             {%- endfor %}
@@ -46,7 +46,7 @@ eachTableTempl = Template(u'''\
                 <td>
                     <div class="render" data-percentWhite="{{img.pcWhite}}">
                         <p>{{ amoi[1][loop.index-1].name|replace("-", " ") }}<br>                  
-                            <img src="{{img_path}}/{{ amoi[1][loop.index-1].fileName }}" /><img src="{{img_path}}/{{ amoi[2][loop.index-1].fileName }}" />
+                            <img src="{{img_path}}/{{ amoi[1][loop.index-1].filename }}" /><img src="{{img_path}}/{{ amoi[2][loop.index-1].filename }}" />
                         </p>
                     </div>
                 <td>
