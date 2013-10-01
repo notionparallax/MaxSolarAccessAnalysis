@@ -2,16 +2,20 @@ import os
 from PIL import Image
 
 class saImage:
-    def __init__(self, hour, faceID, minute, name, month, path):
+    def __init__(self, hour=None, faceID=None, minute=None, name=None, month=None, path=None, file_name=None, building_level=None, appartment=None, appartment_window=None ):
         self.hour      = int(hour,   base=10)
         self.faceID    = int(faceID, base=10)
         self.minute    = int(minute, base=10)
         self.name      = name
-        self.month     = int(month,  base=10)
-        self.filename  = self.fileName()
+        self.month     = int(month,  base=10)        
         self.path      = path
-        self.pcWhite   = self.countPx()
-        
+        self.filename = file_name
+        self.building_level    = building_level 
+        self.appartment        = appartment
+        self.appartment_window = appartment_window
+        self.pcWhite           = self.countPx()
+
+    """                
     def fileName(self):
         return "faceID_" + str(self.faceID) +\
                 "_name_" + str(self.name)    +\
@@ -19,15 +23,21 @@ class saImage:
                 "_hr_" + str(self.hour)      +\
                 "_min_" + str(self.minute)   +\
                 "_.png"    
-            
+    """            
     def __repr__(self):
-        return repr((  ' ID: {:2}'.format(self.faceID)+
+        return repr((  '{'+
+                        ' ID: {:2}'.format(self.faceID)+
                         ', min: {:2}'.format(self.minute)+
-                        ', hr: {:2}'.format(self.hour)+
+                        ', hour: {:2}'.format(self.hour)+
                         ', month: {:2}'.format(self.month)+
-                        ', name: {:14}'.format(self.name)+
-                        ', filename: {}'.format(self.fileName())+
-                        ', path: {}'.format(self.path)
+                        ', path: "{}"'.format(self.path)+
+                        ', name: "{}"'.format(self.name)+
+                        ', filename: "{}"'.format(self.filename)+
+                        ', building_level: {}'.format(self.building_level)+
+                        ', appartment: "{}"'.format(self.appartment)+
+                        ', appartment_window: {}'.format(self.appartment_window)+
+                        ', pcWhite: {:3}'.format(self.pcWhite)+
+                        ' }'
                     ))
 
     def countPx(self):

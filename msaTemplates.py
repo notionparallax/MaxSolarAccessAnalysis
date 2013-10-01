@@ -36,7 +36,7 @@ eachTableTempl = Template(u'''\
                 <td>
                     <div class="render" data-percentWhite="{{img.pcWhite}}">
                         <p>{{ img.name|replace("-", " ") }}<br>
-                        <img src="Images/{{ img.fileName() }}" /></p>
+                        <img src="{{img_path}}/{{ img.fileName }}" /></p>
                     </div>
                 <td>
             {%- endfor %}
@@ -46,7 +46,7 @@ eachTableTempl = Template(u'''\
                 <td>
                     <div class="render" data-percentWhite="{{img.pcWhite}}">
                         <p>{{ amoi[1][loop.index-1].name|replace("-", " ") }}<br>                  
-                            <img src="Images/{{ amoi[1][loop.index-1].fileName() }}" /><img src="Images/{{ amoi[2][loop.index-1].fileName() }}" />
+                            <img src="{{img_path}}/{{ amoi[1][loop.index-1].fileName }}" /><img src="{{img_path}}/{{ amoi[2][loop.index-1].fileName }}" />
                         </p>
                     </div>
                 <td>
