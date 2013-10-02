@@ -1,0 +1,60 @@
+body{
+    font-family:'HelveticaNeueLT Com 45 Lt', 'Helvetica', Arial;
+}
+img{
+    height:60px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #C0C0C0
+}
+p{
+    -webkit-margin-before:0;
+    margin-before:0;
+    -webkit-margin-after:0;
+    margin-after:0;
+}
+td{
+    overflow:hidden;
+}
+.time{}
+.pc-white{
+    width: 3em;
+    overflow: hidden;
+    display: block;}
+.render{
+    width:225px; 
+}
+.info-box{
+    width:200px;
+    display: block;
+} 
+.hard-pass{
+    background-color:chartreuse;
+}
+.soft-pass{
+    background-color:lightgreen;
+}
+.non-zero{
+    background-color:mintcream;
+}
+.fail{
+    background-color:lightcoral;
+}
+
+/*
+.appt-A,.appt-B, .appt-C, .appt-D, .appt-E, 
+.appt-F, .appt-G, .appt-H, .appt-I, .appt-J, .appt-K{
+    border-bottom:1px dashed
+}
+.appt-A{border-bottom-color:red;}
+.appt-B{border-bottom-color:blue;}
+.appt-C{border-bottom-color:green;}
+.appt-D{border-bottom-color:orange;}
+.appt-E{border-bottom-color:purple;}
+.appt-F{border-bottom-color:red;}
+.appt-G{border-bottom-color:red;}
+.appt-H{border-bottom-color:red;}
+.appt-I{border-bottom-color:red;}
+.appt-J{border-bottom-color:red;}
+.appt-K{border-bottom-color:red;}
+*/
