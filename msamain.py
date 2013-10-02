@@ -1,5 +1,6 @@
 print ('GO!!')
 import datetime
+import string
 
 from msaFunctions import *
 import msaTemplates as msat
@@ -41,52 +42,82 @@ path='./tower_example/6'
 print(path)
 
 #gets, formats into objects and sorts the filenames
-saImages = getFileList(path, ('minute','hour','Win','Appt','Level','month'))
-print(saImages)
-
-for i in saImages:
-    print(i)
-    #print i.appendPcWhiteToFileName()#this doesn't actually change the file name yet
+saImages = getFileList(path, ('minute','hour','appartment_window','appartment','building_level','month'))
 
 
-monthBinnedImages = []
-for month in range(len(months)):
-    tempMonthBin = binByMonth(month, saImages)
-    if len(tempMonthBin) > 0:        
-        monthBinnedImages.append(tempMonthBin)
+#monthBinnedImages = []
+#for month in range(len(months)):
+#    tempMonthBin = binByMonth(month, saImages)
+#    if len(tempMonthBin) > 0:        
+#        monthBinnedImages.append(tempMonthBin)
+#
+#binnedImages = []
+#for mbin in monthBinnedImages:
+#    binnedImages.append(binByFace(mbin))
+#   
 
-binnedImages = []
-for mbin in monthBinnedImages:
-    binnedImages.append(binByFace(mbin))
-   
-#build a string, seems neater than writing to the file a lot
-thehtml = ""
-
+##get an outputfile ready
+open('checkingList.html', 'w').close()
+f = open('checkingList.html', 'a')
 #make the header, as far as putting a title into the doc
-thehtml += msat.headTmpl.render(
+f.write( msat.headTmpl.render(
     variable = 'Visualising solar access to these faces',
-    when = datetime.date.today()
-    )
+    when = datetime.date.today() ) )
 
-for moBin in binnedImages:
-    if len(moBin)!= 0:
-        print moBin
+
+#build out a square array of rows
+rows=[]
+for month in range(6,7):
+    for level in [10,27,35,36,45,63]:
+        for idx, appt in enumerate([string.ascii_uppercase[a] for a in range(0,11)]):
+            for win in range(0,5):                                
+                #print month, level, appt, win
+                r=[x for x in saImages if x.month == month and x.building_level == level and x.appartment == appt and x.appartment_window == win]
+                r = sortOnMultipleKeys(r, ('hour','minute'))                
+                rows.append(r)
+
+for r in rows:
+    if len(r) != 0:
+        th = len([img for img in r if img.pcWhite > 0 ])/4
+        bh = len([img for img in r if img.pcWhite > 0 and img.hour >= 9 and img.hour <= 15])/4
+        ps = 'unknown'
+        if bh>2:
+            ps="hard-pass"
+        elif th>2:
+            ps="soft-pass"
+        elif th>0:
+            ps="non-zero"
+        elif th==0:
+            ps='fail'
         
-        thehtml +=  msat.eachTableTempl.render(
-            #amoi is "a month of images"
-            monthName = months[int(moBin[0][0].month-1)],
-            amoi = moBin,
-            img_path = path
-        )
-
-thehtml += msat.tailTmpl.render(
+        window={
+            'totalHours':th,
+            'inBracketHours':bh,
+            'passStatus':ps
+        }
+        f.write( msat.eachimgTempl.render(row=r, monthNames=months, window=window) )
+#for i in saImages:    #'minute','hour','appartment_window','appartment','building_level','month'
+#    
+#    #thehtml = str((i.month, i.building_level, i.appartment, i.appartment_window, i.hour, i.minute))
+#    f.write( msat.eachimgTempl.render(img = i, monthNames=months ) )
+#for moBin in binnedImages:
+#    if len(moBin)!= 0:
+#        print months[int(moBin[0][0].month-1)] #monthname
+#        print moBin
+#        
+#        thehtml +=  msat.eachTableTempl.render(
+#            #amoi is "a month of images"
+#            monthName = months[int(moBin[0][0].month-1)],
+#            amoi = moBin,
+#            img_path = path
+#        )
+#
+f.write( msat.tailTmpl.render(
     variable = 'Visualising solar access to these faces'
-    )
+    ))
 
-#get an outputfile ready
-f = open('tempworkfile.html', 'w')
-print thehtml
-f.write(thehtml)
+
+
 f.close()
 
 

@@ -70,12 +70,11 @@ def filenamesToObjects(files, path):
     return saImages
 
 def sortOnMultipleKeys(thingToSort, tupleOfKeysAsStrings):
-    for key in tupleOfKeysAsStrings:
-        #this is probably no different to sort.thing
-        #how do I avoid side effects?
-        if key in thingToSort:
-            thingToSort = sorted(thingToSort, key=attrgetter(key))
-    return thingToSort
+    try:
+        #('minute','hour','appartment_window','appartment','building_level','month')
+        return sorted(thingToSort, key=attrgetter(*tupleOfKeysAsStrings))                
+    except AttributeError, e:
+        print str(e)
 
 def getFileList(path, sortOrder):
     #get the filenames from the folder

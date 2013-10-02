@@ -5,63 +5,56 @@ headTmpl = Template(u'''\
 <html>
   <head>
     <title>{{ variable|escape }}</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
     <script src="chroma.js/chroma.min.js"></script>
-    <style>
-        img {height:60px;
-             border-right-style: solid;
-             border-right-width: 1px;
-             border-right-color: #C0C0C0}
-        .render{width:225px; }
-        body{font-family:'HelveticaNeueLT Com 45 Lt', 'Helvetica', Arial}
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">    
   </head>
   <body>
     <h1>Run at {{ when }}</h1>
+    <table>
   ''')
 
-
-eachTableTempl = Template(u'''\
-    <h1>{{monthName}} 21<sup>st</sup></h1>
-    <table>
-        <tr>
-            {%- for img in amoi[0] %}
-                <td>
-                    <p>{{ img.hour }}:{{ '{0:0>2}'.format(img.minute) }}</p>
-                <td>
-            {%- endfor %}
-        </tr>
-        <tr>
-            {%- for img in amoi[0] %}
-                <td>
-                    <div class="render" data-percentWhite="{{img.pcWhite}}">
-                        <p>{{ img.name|replace("-", " ") }}</p>
-                        <p><img src="{{img_path}}/{{ img.filename }}" /></p>
-                    </div>
-                <td>
-            {%- endfor %}
-        </tr>
-        <tr>
-            {%- for img in amoi[0] %}
-                <td>
-                    <div class="render" data-percentWhite="{{img.pcWhite}}">
-                        <p>{{ amoi[1][loop.index-1].name|replace("-", " ") }}<br>                  
-                            <img src="{{img_path}}/{{ amoi[1][loop.index-1].filename }}" /><img src="{{img_path}}/{{ amoi[2][loop.index-1].filename }}" />
-                        </p>
-                    </div>
-                <td>
-            {%- endfor %}
-        </tr>
-    </table>
+eachimgTempl = Template(u'''\    
+<tr>       
+    
+        {%- for img in row %} 
+        {% if loop.first %} 
+            <td class="row-title">
+                <div class"info-box">
+                    <p class="month">{{monthNames[img.month]}}</p>
+                    <p>level: {{img.building_level}}</p>
+                    <p>Appt: {{img.appartment}}</p>
+                </div>
+            </td>
+        {% endif %}    
+        <td class="render appt-{{img.appartment}} level-{{img.building_level}}" data-percentWhite="{{img.pcWhite}}">
+            <p><img src="{{img.path}}/{{ img.filename }}" title="|{{ '{0:0>2}'.format(img.pcWhite)}}| {{ img.hour }}:{{ '{0:0>2}'.format(img.minute) }} - {{ img.filename }}" /></p>
+            
+            <p class="time">{{ img.hour }}:{{ '{0:0>2}'.format(img.minute) }} {{ '{0:0>2}'.format(img.pcWhite)}}</p>
+        <td>            
+        {% if loop.last %} 
+            <td class="row-title {{window['passStatus']}}">
+                <div class"info-box">
+                    <h1 class="pass-status">{{window['passStatus']}}</h1>
+                    <p>Total Hours: {{window['totalHours']}}</p>
+                    <p>Bracket Hours: {{window['inBracketHours']}}</p>
+                </div>
+            </td>
+        {% endif %}
+        {%- endfor %}
+    
+</tr>    
 ''')
 
 tailTmpl = Template(u'''\
+        </table>
         <h3>Disclaimer</h3>
         <p>{{ variable|escape }}</p>
         <script>
         $(document).ready(function(){
             console.log("I'm in UR jq");
-            var scale = chroma.scale(['white', 'red']);            
+            var scale = chroma.scale(['white', '#EFDEC1', '#605A41'])
+                        .correctLightness(true);            
             $('.render').each(function(){
                 var pc = $(this).data("percentwhite");
                 var col = scale(pc).hex();                

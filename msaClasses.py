@@ -10,9 +10,9 @@ class saImage:
         self.month     = int(month,  base=10)        
         self.path      = path
         self.filename = file_name
-        self.building_level    = building_level 
+        self.building_level    = int(building_level,    base=10 )
         self.appartment        = appartment
-        self.appartment_window = appartment_window
+        self.appartment_window = int(appartment_window, base=10)
         self.pcWhite           = self.countPx()
 
     """                
@@ -26,17 +26,17 @@ class saImage:
     """            
     def __repr__(self):
         return repr((  '{'+
-                        ' ID: {:2}'.format(self.faceID)+
-                        ', min: {:2}'.format(self.minute)+
-                        ', hour: {:2}'.format(self.hour)+
-                        ', month: {:2}'.format(self.month)+
-                        ', path: "{}"'.format(self.path)+
-                        ', name: "{}"'.format(self.name)+
-                        ', filename: "{}"'.format(self.filename)+
-                        ', building_level: {}'.format(self.building_level)+
-                        ', appartment: "{}"'.format(self.appartment)+
-                        ', appartment_window: {}'.format(self.appartment_window)+
-                        ', pcWhite: {:3}'.format(self.pcWhite)+
+                        '  "ID": {:2}'.format(self.faceID)+
+                        ', "min": {:2}'.format(self.minute)+
+                        ', "hour": {:2}'.format(self.hour)+
+                        ', "month": {:2}'.format(self.month)+
+                        ', "path": "{}"'.format(self.path)+
+                        ', "name": "{}"'.format(self.name)+
+                        ', "filename": "{}"'.format(self.filename)+
+                        ', "building_level": {}'.format(self.building_level)+
+                        ', "appartment": "{}"'.format(self.appartment)+
+                        ', "appartment_window": {}'.format(self.appartment_window)+
+                        ', "pcWhite": {:3}'.format(self.pcWhite)+
                         ' }'
                     ))
 
