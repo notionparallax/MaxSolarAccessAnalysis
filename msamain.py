@@ -79,9 +79,20 @@ for month in range(6,7):
 
 for r in rows:
     if len(r) != 0:
+        # count the number of images in each row (one row per window plane) and 
+        # put that value in -timeWithAnyLight-, then recount with stricter criteria
+        # and put that value into the -timeInBracketWithLight- variable.
+        # then translate these numbers into types of pass.
+        
         numberOfHoursToPass = 2
-        timeWithAnyLight       = len([img for img in r if img.pcWhite > 0 ])/4
-        timeInBracketWithLight = len([img for img in r if img.pcWhite > 0 and img.hour >= 9 and img.hour <= 15])/4
+        numberOfImagesPerHour = 2      
+        bracketStartTime =  9
+        BracketEndTime   = 15  
+
+        timeWithAnyLight       = len([img for img in r if img.pcWhite > 0 ])/numberOfImagesPerHour
+        timeInBracketWithLight = len([img for img in r if img.pcWhite > 0 
+                                                       and img.hour >= bracketStartTime 
+                                                       and img.hour <= BracketEndTime])/numberOfImagesPerHour
         ps = 'unknown'
         if timeInBracketWithLight > numberOfHoursToPass:
             passStatus = "hard-pass"
@@ -98,22 +109,7 @@ for r in rows:
             'passStatus'    : passStatus
         }
         f.write( msat.eachimgTempl.render(row=r, monthNames=months, window=window) )
-#for i in saImages:    #'minute','hour','appartment_window','appartment','building_level','month'
-#    
-#    #thehtml = str((i.month, i.building_level, i.appartment, i.appartment_window, i.hour, i.minute))
-#    f.write( msat.eachimgTempl.render(img = i, monthNames=months ) )
-#for moBin in binnedImages:
-#    if len(moBin)!= 0:
-#        print months[int(moBin[0][0].month-1)] #monthname
-#        print moBin
-#        
-#        thehtml +=  msat.eachTableTempl.render(
-#            #amoi is "a month of images"
-#            monthName = months[int(moBin[0][0].month-1)],
-#            amoi = moBin,
-#            img_path = path
-#        )
-#
+
 f.write( msat.tailTmpl.render(
     variable = 'Visualising solar access to these faces'
     ))
