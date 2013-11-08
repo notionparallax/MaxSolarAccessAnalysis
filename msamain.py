@@ -42,7 +42,8 @@ path='./tower_example/6'
 print(path)
 
 #gets, formats into objects and sorts the filenames
-saImages = getFileList(path, ('minute','hour','appartment_window','appartment','building_level','month'))
+saImages = getFileList(path, ('minute','hour','appartment_window',
+                              'appartment','building_level','month'))
 
 
 #monthBinnedImages = []
@@ -78,22 +79,23 @@ for month in range(6,7):
 
 for r in rows:
     if len(r) != 0:
-        th = len([img for img in r if img.pcWhite > 0 ])/4
-        bh = len([img for img in r if img.pcWhite > 0 and img.hour >= 9 and img.hour <= 15])/4
+        numberOfHoursToPass = 2
+        timeWithAnyLight       = len([img for img in r if img.pcWhite > 0 ])/4
+        timeInBracketWithLight = len([img for img in r if img.pcWhite > 0 and img.hour >= 9 and img.hour <= 15])/4
         ps = 'unknown'
-        if bh>2:
-            ps="hard-pass"
-        elif th>2:
-            ps="soft-pass"
-        elif th>0:
-            ps="non-zero"
-        elif th==0:
-            ps='fail'
+        if timeInBracketWithLight > numberOfHoursToPass:
+            passStatus = "hard-pass"
+        elif timeWithAnyLight     > numberOfHoursToPass:
+            passStatus = "soft-pass"
+        elif timeWithAnyLight     > 0:
+            passStatus = "non-zero"
+        elif timeWithAnyLight    == 0:
+            passStatus = 'fail'
         
         window={
-            'totalHours':th,
-            'inBracketHours':bh,
-            'passStatus':ps
+            'totalHours'    : timeWithAnyLight,
+            'inBracketHours': timeInBracketWithLight,
+            'passStatus'    : passStatus
         }
         f.write( msat.eachimgTempl.render(row=r, monthNames=months, window=window) )
 #for i in saImages:    #'minute','hour','appartment_window','appartment','building_level','month'
