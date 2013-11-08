@@ -45,18 +45,6 @@ print(path)
 saImages = getFileList(path, ('minute','hour','appartment_window',
                               'appartment','building_level','month'))
 
-
-#monthBinnedImages = []
-#for month in range(len(months)):
-#    tempMonthBin = binByMonth(month, saImages)
-#    if len(tempMonthBin) > 0:        
-#        monthBinnedImages.append(tempMonthBin)
-#
-#binnedImages = []
-#for mbin in monthBinnedImages:
-#    binnedImages.append(binByFace(mbin))
-#   
-
 ##get an outputfile ready
 open('checkingList.html', 'w').close()
 f = open('checkingList.html', 'a')
