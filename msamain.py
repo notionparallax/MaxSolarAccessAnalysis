@@ -81,7 +81,7 @@ for r in rows:
         timeInBracketWithLight = len([img for img in r if img.pcWhite > 0 
                                                        and img.hour >= bracketStartTime 
                                                        and img.hour <= BracketEndTime])/numberOfImagesPerHour
-        ps = 'unknown'
+        passStatus = 'unknown'
         if timeInBracketWithLight > numberOfHoursToPass:
             passStatus = "hard-pass"
         elif timeWithAnyLight     > numberOfHoursToPass:
