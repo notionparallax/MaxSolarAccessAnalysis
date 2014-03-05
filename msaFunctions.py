@@ -39,31 +39,44 @@ def pullNamesFromFolder(dirList):
     for fname in dirList:
         name = fname.split(".png")
         if len(name) >1:
-            n = fname.split("_")
+            n = fname.split(".png")[0].split("_")
+            
+            #overcome the name being _ split too.
+            tempName = "-".join([n.pop(3),n.pop(3),n.pop(3),n.pop(3)])
+            n.insert(3, tempName)
+            
+            #print n
+            
             files.append({'file_name':fname,
                           n[ 0]:n[ 1],
                           n[ 2]:n[ 3],
                           n[ 4]:n[ 5],
                           n[ 6]:n[ 7],
                           n[ 8]:n[ 9],
-                          n[10]:n[11],
-                          n[12]:n[13]})
+                          n[10]:n[11]
+                          })
     return files
 
 def filenamesToObjects(files, path):
     saImages = []
     for img in files:
+        name = img['name'].split("-")
+        nLevel = name[1]
+        nAppt  = name[2]
+        nWin   = name[3]
         #this is where the class happens!!!!!!!!!!!!!!!!!!!!!!
         anImage =  msac.saImage(hour   = img['hr'], 
                                 faceID = img['faceID'], 
                                 minute = img['min'], 
-                                #name   = img['name'], 
+                                name   = img['name'], 
                                 month  = img['month'], 
                                 path   = path, 
                                 file_name         = img['file_name'],
-                                building_level    = img['Level'], 
-                                appartment        = img['Appt'], 
-                                appartment_window = img['Win']
+                                building_level    = nAppt,#img['Level'], 
+                                appartment        = nAppt,#img['Appt'], 
+                                appartment_window = nWin,#img['Win']
+                                whitePercentage   = img["wpc"],
+                                building          = img['name'][0]
                                )
         #print anImage
         saImages.append(anImage)
@@ -91,7 +104,7 @@ def getFileList(path, sortOrder):
 
     #sort images
     saImages = sortOnMultipleKeys(saImages, sortOrder)
-    #print(saImages)
+    #print(saImages) 
     
     return saImages
 

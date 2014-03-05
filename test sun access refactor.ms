@@ -1,15 +1,15 @@
 fileIn "sunAccessFunctions.ms"
 print "****************************"
 
-rootFolder = ""
+rootFolder = "C:\Users\bdoherty\Desktop\AMP_solar\\"
 hourSubdiv = 4
 startTime = 7
 endTime  = 19
-startMonth = 1
-endMonth = 11
+startMonth = 6
+endMonth = 6
 outputWidth = 400 --in pixels
 justMakeTheCameras = false
-selectionSetname = "toTest"
+selectionSetname = "windows"
 
 print "here we go"
 	
@@ -18,8 +18,9 @@ print "here we go"
 analysisFaces = selectionSets[selectionSetname] 
 
 print ("lets get going on " + (analysisFaces.count as string) + " faces")
-for month in startMonth to (endMonth +1)  do -- +1 so that it does the last month
-(
+month = startMonth
+--for month in startMonth to (endMonth +1 -1)  do -- +1 so that it does the last month
+--(
 	$Daylight001.controller.solar_date = solarDateFromMonth(month)
 	print ("month " + solarDateFromMonth(month) as string)
 	
@@ -99,5 +100,5 @@ for month in startMonth to (endMonth +1)  do -- +1 so that it does the last mont
 			print "OHSHIT: theNameOfThisFace is undefined"
 		)
 	)
-)
+--)
 Print "*****finished*****"

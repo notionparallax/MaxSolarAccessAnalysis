@@ -2,26 +2,30 @@ import os
 from PIL import Image
 
 class saImage:
-    def __init__(self, hour=None, faceID=None, minute=None, name=None, month=None, path=None, file_name=None, building_level=None, appartment=None, appartment_window=None ):
+    def __init__(self, hour=None, faceID=None, minute=None, name=None, 
+                 month=None, path=None, file_name=None, building_level=None, 
+                 appartment=None, appartment_window=None, whitePercentage=0.0,
+                 building="A"):
         self.hour      = int(hour,   base=10)
         self.faceID    = int(faceID, base=10)
         self.minute    = int(minute, base=10)
         self.name      = name
         self.month     = int(month,  base=10)        
         self.path      = path
-        self.filename = file_name
+        self.filename  = file_name
+        self.building  = building
         self.building_level    = int(building_level,    base=10 )
-        self.appartment        = appartment
+        self.appartment        = int(appartment,        base=10)
         self.appartment_window = int(appartment_window, base=10)
-        self.pcWhite           = self.countPx()
+        self.pcWhite           = float(whitePercentage)/100.0 #self.countPx()
 
     """                
     def fileName(self):
         return "faceID_" + str(self.faceID) +\
-                "_name_" + str(self.name)    +\
-                "_month_" + str(self.month)  +\
-                "_hr_" + str(self.hour)      +\
-                "_min_" + str(self.minute)   +\
+                "_name_" + str(self.name)   +\
+                "_month_" + str(self.month) +\
+                "_hr_" + str(self.hour)     +\
+                "_min_" + str(self.minute)  +\
                 "_.png"    
     """            
     def __repr__(self):
@@ -37,6 +41,7 @@ class saImage:
                         ', "appartment": "{}"'.format(self.appartment)+
                         ', "appartment_window": {}'.format(self.appartment_window)+
                         ', "pcWhite": {:3}'.format(self.pcWhite)+
+                        ', "building": "{}"'.format(self.building)+
                         ' }'
                     ))
 

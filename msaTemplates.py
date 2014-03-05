@@ -10,7 +10,7 @@ headTmpl = Template(u'''\
     <link rel="stylesheet" type="text/css" href="style.css">    
   </head>
   <body>
-    <h1>Run at {{ when }}</h1>
+    <h1>Run on {{ when }}</h1>
     <table>
   ''')
 
