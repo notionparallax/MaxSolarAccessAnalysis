@@ -38,7 +38,7 @@ months = [  'January'  ,            'February' ,            'March'    ,
 #############################################################################
 
 #Action starts here:
-path='C:\\Users\\bdoherty\\Desktop\\AMP_solar'
+path='P:\\13\\s1309002.yel\\Admin\\04.0 Authorities\\4.01 Town Planning\\04_SEPP 65 and Residential Flat Design Code\\20140314 S1DA'
 print(path)
 print
 
@@ -46,7 +46,10 @@ numberOfHoursToPass = 2
 numberOfImagesPerHour = 4      
 bracketStartTime =  9
 BracketEndTime   = 15  
-print "numberOfHoursToPass", numberOfHoursToPass, "numberOfImagesPerHour", numberOfImagesPerHour, "bracketStartTime", bracketStartTime, "BracketEndTime", BracketEndTime
+print "numberOfHoursToPass", numberOfHoursToPass
+print "numberOfImagesPerHour", numberOfImagesPerHour
+print "bracketStartTime", bracketStartTime
+print "BracketEndTime", BracketEndTime
 print
 
 #gets, formats into objects and sorts the filenames
@@ -70,9 +73,9 @@ buildingC = []
 for name in appts.keys():
     if name[0] == "A":
         buildingA.append(name)
-    if name[0] == "B":
+    elif name[0] == "B":
         buildingB.append(name)
-    if name[0] == "C":
+    elif name[0] == "C":
         buildingC.append(name)
     else:
         print "someting strange afoot in",name 
