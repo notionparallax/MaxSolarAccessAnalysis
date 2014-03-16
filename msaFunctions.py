@@ -46,6 +46,8 @@ def pullNamesFromFolder(dirList):
             n.insert(3, tempName)
             
             #print n
+            if "wpc" not in n:
+                print "this error is because you haven't processed the files for white %"
             
             files.append({'file_name':fname,
                           n[ 0]:n[ 1],
