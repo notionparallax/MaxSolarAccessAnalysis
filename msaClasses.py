@@ -18,6 +18,8 @@ class saImage:
         self.appartment        = int(appartment,        base=10)
         self.appartment_window = int(appartment_window, base=10)
         self.pcWhite           = float(whitePercentage)/100.0 #self.countPx()
+        self.totalArea         = 0
+        #self.exposedArea       = self.exposedArea()
 
     """                
     def fileName(self):
@@ -28,6 +30,8 @@ class saImage:
                 "_min_" + str(self.minute)  +\
                 "_.png"    
     """            
+
+        
     def __repr__(self):
         return repr((  '{'+
                         '  "ID": {:2}'.format(self.faceID)+
@@ -42,8 +46,12 @@ class saImage:
                         ', "appartment_window": {}'.format(self.appartment_window)+
                         ', "pcWhite": {:3}'.format(self.pcWhite)+
                         ', "building": "{}"'.format(self.building)+
+                        ', "totalArea": "{}"'.format(self.totalArea)+
                         ' }'
                     ))
+                    
+    def exposedArea(self):
+        return self.totalArea * self.pcWhite
 
     def countPx(self):
         fullName = self.path+'/'+self.filename

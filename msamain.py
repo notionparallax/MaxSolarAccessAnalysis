@@ -4,7 +4,9 @@ import string
 
 from msaFunctions import *
 import msaTemplates as msat
-#from msaClasses import saImage
+
+import pandas as pd
+
 
 """
 File name format was:
@@ -38,7 +40,8 @@ months = [  'January'  ,            'February' ,            'March'    ,
 #############################################################################
 
 #Action starts here:
-path='P:\\13\\s1309002.yel\\Admin\\04.0 Authorities\\4.01 Town Planning\\04_SEPP 65 and Residential Flat Design Code\\20140314 S1DA'
+#path='P:\\13\\s1309002.yel\\Admin\\04.0 Authorities\\4.01 Town Planning\\04_SEPP 65 and Residential Flat Design Code\\20140314 S1DA'
+path='C:\\Users\\bdoherty\\Desktop\\20140314 S1DA'
 print(path)
 print
 
@@ -55,138 +58,61 @@ print
 #gets, formats into objects and sorts the filenames
 saImages = getFileList(path, ('minute','hour','appartment_window',
                               'appartment','building_level','month'))
-
-appts={}
+                                                          
+windowAreas = {
+    'C-6-4-1':36.6095,'C-6-5-1':26.255,'C-11-1-1':5.38377,'C-11-2-1':23.305,'C-10-2-1':23.305,
+    'C-10-1-1':10.2542,'C-9-1-1':20.5084,'C-9-2-1':11.6525,'C-8-2-1':11.6525,'C-8-1-1':20.5084,
+    'C-7-2-1':23.305,'C-7-1-1':10.2542,'C-6-1-1':20.5084,'C-6-2-1':23.305,'C-6-3-1':23.128,
+    'C-7-3-1':10.233,'C-7-4-1':5.1435,'C-11-4-1':16.756,'C-11-3-1':16.815,'C-10-3-1':16.815,
+    'C-10-4-1':16.756,'C-9-4-1':16.756,'C-9-3-1':16.815,'C-8-3-1':16.815,'C-8-4-1':16.756,
+    'B-4-1-1':15.1303,'B-5-1-1':15.1303,'B-6-1-1':7.59627,'B-7-1-1':7.59627,'B-8-1-1':7.59627,
+    'B-9-1-1':7.59627,'B-2-5-2':4.55774,'B-3-5-3':10.325,'B-2-5-3':10.325,'B-3-5-2':4.55774,
+    'B-4-4-2':10.325,'B-5-5-2':10.325,'B-9-4-3':4.95599,'B-8-4-3':4.95599,'B-7-4-3':4.95599,
+    'B-6-4-3':4.95599,'B-6-2-2':13.8303,'B-7-2-2':13.8303,'B-8-2-2':13.8303,'B-6-2-1':15.401,
+    'B-7-2-1':15.401,'B-8-2-1':15.401,'B-9-2-1':9.76115,'B-2-4-3':4.49854,'B-3-4-3':4.49854,
+    'B-2-3-3':8.99889,'B-3-2-3':8.99889,'B-9-3-1':6.00919,'B-8-3-1':6.00919,'B-7-3-1':6.00919,
+    'B-6-3-1':6.00919,'B-2-4-4':11.8,'B-2-3-4':5.9,'B-3-4-4':11.8,'B-3-2-4':5.9,'B-9-2-2':13.8996,
+    'B-9-3-2':13.8995,'B-8-3-2':13.8995,'B-7-3-2':13.8995,'B-6-3-2':13.8995,'B-5-2-1':17.9507,
+    'B-5-4-1':17.9507,'B-10-3-2':11.3405,'B-10-2-1':19.7057,'B-10-3-1':20.9477,'B-11-1-2':0.643985,
+    'B-11-1-1':8.95805,'B-11-1-3':14.8975,'B-2-4-1':10.4843,'B-2-4-2':6.6375,'B-3-4-1':10.4843,
+    'B-3-4-2':6.6375,'B-4-2-2':5.9,'B-4-2-1':10.915,'B-3-3-2':2.35445,'B-3-3-1':4.57692,
+    'B-4-3-2':10.915,'B-4-3-1':11.8,'B-5-3-2':11.0625,'B-5-3-1':9.14497,'B-6-4-1':4.95603,
+    'B-6-4-2':5.54596,'B-7-4-1':4.95603,'B-7-4-2':5.54596,'B-8-4-1':4.95603,'B-8-4-2':5.54596,
+    'B-9-4-1':4.95603,'B-9-4-2':5.54596,'B-11-2-2':11.6525,'B-11-2-1':14.8975,'B-2-3-2':6.40152,
+    'B-2-3-1':9.15681,'B-2-1-1':13.4225,'B-2-2-1':11.7882,'B-3-1-1':13.4225,'B-3-2-1':11.7882,
+    'B-10-1-1':4.425,'B-4-4-1':8.55499,'B-5-5-1':8.55499,'B-2-5-1':15.93,'B-3-5-1':15.93,
+    'A-2-4-2':18.585,'A-3-4-2':18.585,'A-4-4-2':18.585,'A-5-4-2':18.585,'A-6-3-2':18.585,
+    'A-6-3-1':11.8366,'A-5-4-1':11.8366,'A-4-4-1':11.8366,'A-3-4-1':11.8366,'A-2-4-1':11.8366,
+    'A-7-1-1':10.5315,'A-6-1-1':11.3929,'A-2-2-2':7.3763,'A-3-2-2':7.3763,'A-4-2-2':7.3763,
+    'A-5-2-2':7.3763,'A-6-7-1':11.7389,'A-2-7-1':11.623,'A-3-7-1':11.623,'A-4-7-1':11.623,
+    'A-5-7-1':11.623,'A-7-4-1':13.9594,'A-5-5-1':7.39269,'A-5-5-3':6.32775,'A-5-5-2':6.3204,
+    'A-2-5-1':7.39269,'A-2-5-3':6.32775,'A-2-5-2':6.3204,'A-3-5-1':7.39269,'A-3-5-3':6.32775,
+    'A-3-5-2':6.3204,'A-4-5-1':7.39269,'A-4-5-3':6.32775,'A-4-5-2':6.3204,'A-6-4-1':7.39269,
+    'A-6-4-3':6.32775,'A-6-4-2':6.3204,'A-2-1-1':8.55501,'A-2-2-1':5.59025,'A-2-3-1':11.8531,
+    'A-3-1-1':8.55501,'A-4-1-1':8.55501,'A-5-1-1':8.55501,'A-3-2-1':5.59025,'A-4-2-1':5.59025,
+    'A-5-2-1':5.59025,'A-3-3-1':11.8531,'A-4-3-1':11.8531,'A-5-3-1':11.8531,'A-6-2-1':11.8531,
+    'A-2-6-1':5.78937,'A-2-8-1':5.87053,'A-2-9-1':8.55501,'A-3-8-1':11.741,'A-4-8-1':11.741,
+    'A-5-8-1':11.741,'A-5-9-1':8.55501,'A-4-9-1':8.55501,'A-3-9-1':8.55501,'A-3-6-1':11.5788,
+    'A-4-6-1':11.5788,'A-5-6-1':11.5788,'A-6-5-1':11.6352,'A-6-6-1':11.6233,'A-7-2-1':5.42799,
+    'A-7-3-1':10.2365,'C-7-5-1':22.656,'C-8-5-1':22.656,'C-9-5-1':22.656,'C-10-5-1':22.656,
+    'C-11-5-1':22.656,'C-11-6-1':10.2513,'C-9-6-1':10.2513,'C-8-6-1':10.2513,
+    'C-7-6-1':10.2513,'C-6-7-1':10.2513,'C-6-6-1':22.656,'C-10-6-1':20.5025
+    }    
+                             
 for i in saImages:
-    if i.name in appts:
-        appts[i.name] +=1
-    else:
-        appts[i.name] =1
-#print appts
+    i.totalArea = windowAreas[i.name]
+    
+dictsOfImages = []
+for i in saImages:
+    dictsOfImages.append(i.__dict__)
 
-#explicity name the appts
-buildingA = []
-buildingB = []
-buildingC = []
+imageDF = pd.DataFrame(dictsOfImages)
+#split the name up for sorting
+imageDF["building"] = imageDF["name"].apply(lambda x: x.split("-")[0])
+imageDF["level"]    = imageDF["name"].apply(lambda x: x.split("-")[1])
+imageDF["appt"]     = imageDF["name"].apply(lambda x: x.split("-")[2])
+imageDF["window"]   = imageDF["name"].apply(lambda x: x.split("-")[3])
+# make a column with area exposed
+imageDF["areaExposed"]   = imageDF["totalArea"] * imageDF["pcWhite"] #imageDF["areaExposed"]   = imageDF.apply(lambda x: x["totalArea"] * x["pcWhite"], axis=1) # is equivalent
 
-
-for name in appts.keys():
-    if name[0] == "A":
-        buildingA.append(name)
-    elif name[0] == "B":
-        buildingB.append(name)
-    elif name[0] == "C":
-        buildingC.append(name)
-    else:
-        print "someting strange afoot in",name 
-
-for building in [buildingA, buildingB, buildingC]:
-    ##get an outputfile ready
-    outputFileName = '\checkingList_'+building[0][0]+'.html'
-    open(path + outputFileName, 'w').close()
-    
-    f = open(path + outputFileName, 'a')
-    print f
-    
-    
-    #make the header, as far as putting a title into the doc
-    f.write( msat.headTmpl.render(
-        variable = 'Visualising solar access to these faces',
-        when = datetime.date.today() ) )
-    
-    #build out a square array of rows
-    rows=[]
-    month = 6
-    for apartment in building:        
-        apptDetails = apartment.split("-")
-        bld   = apptDetails[0] #a letter; A, B or C
-        level = int(apptDetails[1], base=10 )
-        appt  = int(apptDetails[2], base=10 )
-        win   = int(apptDetails[3], base=10 )
-        
-        
-        r = [x for x in saImages if x.name == apartment]
-        #x.building == bld and x.building_level == level and x.appartment == appt and x.appartment_window == win]
-        
-        #print  apartment, len(r)
-
-        r = sortOnMultipleKeys(r, ('hour','minute'))  
-        #if len(r)>0: 
-        #    print "building",building[0][0],"level", level, "appt", appt, "win", win 
-        #    print len(r)#, r[0]
-        rows.append(r)            
-    
-    example = { "ID": 90, "min": 45, "hour": 19, "month":  6, "path": "C:\\Users\\bdoherty\\Desktop\\AMP_solar", 
-                "name": "C-11-6-1", "filename": "faceID_90_name_C_11_6_1_month_6_hr_19_min_45_wpc_0.0.png", 
-                "building_level": 6, "appartment": "6", "appartment_window": 1, "pcWhite": 0.0, "building": "C" }
-
-    def sortcriteria(aRow):
-        #print aRow
-        x = aRow[0]
-        #print x
-        sortString = str(x.building_level)+str(x.appartment)+str(x.appartment_window)
-        #print sortString
-        sorter =int(sortString, base=10) 
-        print sorter, type(sorter)
-        return sorter
-    
-    rowsWithIDs=[]
-    for r in rows:
-        rowsWithIDs.append({"level":r[0].building_level,"appt":r[0].appartment,"win":r[0].appartment_window,"row":r})
-    
-    #sortcriteria(rows[0])
-    rows = sorted(rowsWithIDs, key=lambda x:x["win"])
-    rows = sorted(rowsWithIDs, key=lambda x:x["appt"])
-    rows = sorted(rowsWithIDs, key=lambda x:x["level"])
-    #sortOnMultipleKeys(rowsWithIDs,("win","appt","level"))
-    
-    hardPasses=0
-    softPasses=0
-    nonZero   =0
-    fail      =0
-    
-    for r in rows:
-        r = r["row"]
-        if len(r) != 0:
-            # count the number of images in each row (one row per window plane) and 
-            # put that value in -timeWithAnyLight-, then recount with stricter criteria
-            # and put that value into the -timeInBracketWithLight- variable.
-            # then translate these numbers into types of pass.
-                        
-            timeWithAnyLight       = len([img for img in r if  img.pcWhite > 0 ])/numberOfImagesPerHour
-            timeInBracketWithLight = len([img for img in r if  img.pcWhite > 0 
-                                                            and img.hour >= bracketStartTime 
-                                                            and img.hour <= BracketEndTime])/numberOfImagesPerHour
-            passStatus = 'unknown'
-            if timeInBracketWithLight > numberOfHoursToPass:
-                passStatus = "hard-pass"
-                hardPasses+=1
-            elif timeWithAnyLight     > numberOfHoursToPass:
-                passStatus = "soft-pass"
-                softPasses+=1
-            elif timeWithAnyLight     > 0:
-                passStatus = "non-zero"
-                nonZero+=1
-            elif timeWithAnyLight    == 0:
-                passStatus = 'fail'
-                fail+=1
-            
-            window={
-                'totalHours'    : timeWithAnyLight,
-                'inBracketHours': timeInBracketWithLight,
-                'passStatus'    : passStatus
-            }
-            #print window
-            f.write( msat.eachimgTempl.render(row=r, monthNames=months, window=window) )
-    
-    total = hardPasses + softPasses + nonZero + fail
-    resultString =("hardPasses: "+str(hardPasses) + " - " + str(hardPasses/float(total)*100) + "%<br>" +
-                   "softPasses: "+str(softPasses) + " - " + str(softPasses/float(total)*100) + "%<br>" +
-                   "nonZero   : "+str(nonZero)    + " - " + str(nonZero/float(total)*100) + "%<br>" +
-                   "fail      : "+str(fail)       + " - " + str(fail/float(total)*100) + "%<br>")
-    print "\n".join(resultString.split('<br>'))
-    f.write( msat.tailTmpl.render( variable = resultString))
-        
-    f.close()
-
-print "done"
+imageDF.query('a > b')
