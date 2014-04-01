@@ -5,10 +5,10 @@ from PIL import Image
 im = Image.open("./Images/faceID_1_name_Diversity-Wall_month_5_hr_14_min_45_.png")
 im = im.convert("RGB")
 #some pleasantries
-print("info:", im.info)
-print("palette:", im.palette)
-print("mode :", im.mode)
-print("format:", im.format)
+print("info:"    , im.info)
+print("palette:" , im.palette)
+print("mode :"   , im.mode)
+print("format:"  , im.format)
 #print("string:", im.tostring())
 
 #this gets a 1d list of tuples (r,g,b)

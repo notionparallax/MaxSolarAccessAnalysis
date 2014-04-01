@@ -2,7 +2,7 @@ from operator import itemgetter, attrgetter
 import os
 import msaClasses as msac
 
-def uniqueItems(seq, idfun=None): 
+def uniqueItems(seq, idfun=None):
    # order preserving
    # taken from http://www.peterbe.com/plog/uniqifiers-benchmark
    if idfun is None:
@@ -22,7 +22,7 @@ def uniqueItems(seq, idfun=None):
  '9',      1
  'Level',  2
  '10',     3
- 'Appt',   4 
+ 'Appt',   4
  'G',      5
  'Win',    6
  '1',      7
@@ -40,23 +40,26 @@ def pullNamesFromFolder(dirList):
         name = fname.split(".png")
         if len(name) >1:
             n = fname.split(".png")[0].split("_")
-            
+
             #overcome the name being _ split too.
             tempName = "-".join([n.pop(3),n.pop(3),n.pop(3),n.pop(3)])
             n.insert(3, tempName)
-            
-            #print n
+
             if "wpc" not in n:
                 print "this error is because you haven't processed the files for white %"
-            
-            files.append({'file_name':fname,
-                          n[ 0]:n[ 1],
-                          n[ 2]:n[ 3],
-                          n[ 4]:n[ 5],
-                          n[ 6]:n[ 7],
-                          n[ 8]:n[ 9],
-                          n[10]:n[11]
-                          })
+
+            windowDict = {'file_name':fname,
+                                n[ 0]:n[ 1],
+                                n[ 2]:n[ 3],
+                                n[ 4]:n[ 5],
+                                n[ 6]:n[ 7],
+                                n[ 8]:n[ 9],
+                                n[10]:n[11],
+                                n[12]:n[13]
+                                }
+            files.append(windowDict)
+            #print n
+            #print windowDict
     return files
 
 def filenamesToObjects(files, path):
@@ -67,18 +70,19 @@ def filenamesToObjects(files, path):
         nAppt  = name[2]
         nWin   = name[3]
         #this is where the class happens!!!!!!!!!!!!!!!!!!!!!!
-        anImage =  msac.saImage(hour   = img['hr'], 
-                                faceID = img['faceID'], 
-                                minute = img['min'], 
-                                name   = img['name'], 
-                                month  = img['month'], 
-                                path   = path, 
+        anImage =  msac.saImage(hour              = img['hr'],
+                                faceID            = img['faceID'],
+                                minute            = img['min'],
+                                name              = img['name'],
+                                month             = img['month'],
+                                path              = path,
                                 file_name         = img['file_name'],
-                                building_level    = nAppt,#img['Level'], 
-                                appartment        = nAppt,#img['Appt'], 
+                                building_level    = nAppt,#img['Level'],
+                                appartment        = nAppt,#img['Appt'],
                                 appartment_window = nWin,#img['Win']
-                                whitePercentage   = img["wpc"],
-                                building          = img['name'][0]
+                                whitePercentage   = img['wpc'],
+                                area              = img['area'],
+                                building          = img['name'][7]#usually 0 but I'm a moron and I called the faces winfaceB not jsut B
                                )
         #print anImage
         saImages.append(anImage)
@@ -87,7 +91,7 @@ def filenamesToObjects(files, path):
 def sortOnMultipleKeys(thingToSort, tupleOfKeysAsStrings):
     try:
         #('minute','hour','appartment_window','appartment','building_level','month')
-        return sorted(thingToSort, key=attrgetter(*tupleOfKeysAsStrings))                
+        return sorted(thingToSort, key=attrgetter(*tupleOfKeysAsStrings))
     except AttributeError, e:
         print str(e)
 
@@ -95,19 +99,19 @@ def getFileList(path, sortOrder):
     #get the filenames from the folder
     dirList=os.listdir(path)
     #print(dirList)
-    
+
     #chop up the filenames and make them prettier
     files = pullNamesFromFolder(dirList)
     #print(files)
-    
+
     #push the chopped up filenames into objects
     saImages = filenamesToObjects(files, path)
     #print(saImages)
 
     #sort images
     saImages = sortOnMultipleKeys(saImages, sortOrder)
-    #print(saImages) 
-    
+    #print(saImages)
+
     return saImages
 
 def binByMonth(month, imageList):
@@ -122,9 +126,9 @@ def binByFace(imagesBinnedByMonth):
     faceBins = []
     idBins = uniqueItems((img.faceID for img in mbin))
     for idBin in idBins:
-        thisFaceBin = []        
+        thisFaceBin = []
         for img in mbin:
             if img.faceID == idBin:
-                thisFaceBin.append(img)        
+                thisFaceBin.append(img)
         faceBins.append(thisFaceBin)
     return faceBins
