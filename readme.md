@@ -5,6 +5,8 @@ In intermittant development at BVN Donovan Hill
 
 ##Process##
 
-1. max bit
+3D Studio Max bit
+Sun
+Materials
 2. rename bit
 3. processing bit
