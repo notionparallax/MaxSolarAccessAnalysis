@@ -28,6 +28,4 @@ Set your time (etc.) requirements:
 
 Make sure that you can see the listener (`f11`) then kick off the script. This will take a pretty long time so you'll want something to keep you occupied. It'll only make images if there isn't already an image of this name, so if it crashes then you can just start it again and it'll pick up where it left off.
 
-
-2. rename bit
-3. processing bit
+###Python bit###
