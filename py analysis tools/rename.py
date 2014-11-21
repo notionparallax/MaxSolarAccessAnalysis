@@ -1,6 +1,8 @@
 import os
 from PIL import Image
 
+#this takes a file and calculates the percentage of white pixels in the image.
+#it assumes rectangular windows and needs to be modified if there is a filler colour for non rectangular shapes
 def countPx(path,filename):
     fullName = path+'/'+filename
     im = Image.open(fullName)

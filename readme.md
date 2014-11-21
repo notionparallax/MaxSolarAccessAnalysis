@@ -32,3 +32,7 @@ selectionSetname = "windows" --the name of your selection set.
 Make sure that you can see the listener (`f11`) then kick off the script. This will take a pretty long time so you'll want something to keep you occupied. It'll only make images if there isn't already an image of this name, so if it crashes then you can just start it again and it'll pick up where it left off.
 
 ###Python bit###
+
+You should now have a pig folder full of images. `Rename.py` takes these images, calculates their percentage white and inserts it into the file name. (PIL dependency)
+
+The next step needs iPython notebook and Pandas to convert the images into a Pandas data table and then to do whatever analysis you need to do on it.
